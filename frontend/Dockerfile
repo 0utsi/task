@@ -3,10 +3,10 @@ WORKDIR /app
 
 COPY package.json package-lock.json* ./
 
-RUN npm install          # wygeneruje package-lock.json, jeśli go brak
+RUN npm install 
 
 COPY . .
-RUN npm run build        # buduje aplikację Next.js
+RUN npm run build 
 
 FROM node:20-alpine AS runner
 WORKDIR /app
