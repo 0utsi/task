@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { User } from "./user.entity";
+import type { Relation } from "typeorm";
 
 export enum AddressType {
   HOME = "HOME",
@@ -47,8 +48,6 @@ export class UserAddress {
   @UpdateDateColumn({ name: "updated_at", type: "timestamptz" })
   updatedAt!: Date;
 
-  @ManyToOne(() => User, (user) => user.addresses, {
-    onDelete: "CASCADE",
-  })
-  user!: User;
+  @ManyToOne(() => User, (user) => user.addresses, { onDelete: "CASCADE" })
+  user!: Relation<User>;
 }

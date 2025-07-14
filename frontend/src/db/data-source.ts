@@ -1,16 +1,21 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "./entities/user.entity";
 import { UserAddress } from "./entities/user-address.entity";
+import { User } from "./entities/user.entity";
 
-const globalForDS = globalThis as unknown as { dataSource?: DataSource };
+export const db = new DataSource({
+  type: "postgres",
+  url: process.env.DATABASE_URL,
+  entities: [User, UserAddress],
+  synchronize: false,
+  logging: false,
+});
 
-export const db =
-  globalForDS.dataSource ??
-  new DataSource({
-    type: "postgres",
-    url: process.env.DATABASE_URL,
-    entities: [User, UserAddress],
-    synchronize: false,
-    logging: false,
-  });
+let _initialized = false;
+
+export async function ensureDb() {
+  if (!_initialized) {
+    if (!db.isInitialized) await db.initialize();
+    _initialized = true;
+  }
+}

@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
+import type { Relation } from "typeorm";
 import { UserAddress } from "./user-address.entity";
 
 export enum UserStatus {
@@ -19,13 +20,13 @@ export class User {
   id!: number;
 
   @Column({ name: "first_name", length: 60, nullable: true })
-  firstName!: string | null;
+  firstName?: string;
 
   @Column({ name: "last_name", length: 100 })
   lastName!: string;
 
   @Column({ length: 30, nullable: true })
-  initials!: string | null;
+  initials?: string;
 
   @Column({ length: 100, unique: true })
   email!: string;
@@ -39,6 +40,6 @@ export class User {
   @UpdateDateColumn({ name: "updated_at", type: "timestamptz" })
   updatedAt!: Date;
 
-  @OneToMany(() => UserAddress, (addr) => addr.user, { cascade: true })
-  addresses!: UserAddress[];
+  @OneToMany(() => UserAddress, (addr) => addr.user)
+  addresses!: Relation<UserAddress[]>;
 }
