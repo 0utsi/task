@@ -1,13 +1,17 @@
 import { z } from "zod";
+import { AddressType } from "@/db/entities/user-address.entity";
 
-export const addressSchema = z.object({
-  userId: z.number().int().positive(),
-  validFrom: z.coerce.date(),
-  street: z.string().max(100),
-  buildingNumber: z.string().max(60),
-  postCode: z.string().regex(/^\d{2,6}$/),
-  city: z.string().max(60),
-  countryCode: z.string().regex(/^[A-Z]{3}$/),
+export const addressFormSchema = z.object({
+  addressType: z.nativeEnum(AddressType),
+  street: z.string().min(1).max(100),
+  buildingNumber: z.string().min(1).max(60),
+  postCode: z.string().min(1).max(6),
+  city: z.string().min(1).max(60),
+  countryCode: z
+    .string()
+    .length(3)
+    .refine((c) => /^[A-Z]{3}$/.test(c), "Must be ISO3166-1 alpha-3"),
+  validFrom: z.string().refine((d) => !isNaN(Date.parse(d)), "Invalid date"),
 });
 
-export type AddressDTO = z.infer<typeof addressSchema>;
+export type AddressFormData = z.infer<typeof addressFormSchema>;

@@ -10,6 +10,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE users_addresses (
+    id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     address_type VARCHAR(7) NOT NULL CHECK (address_type IN ('HOME', 'INVOICE', 'POST', 'WORK')),
     valid_from TIMESTAMP NOT NULL,

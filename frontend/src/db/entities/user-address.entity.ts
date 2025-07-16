@@ -5,6 +5,8 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./user.entity";
 import type { Relation } from "typeorm";
@@ -18,10 +20,13 @@ export enum AddressType {
 
 @Entity({ name: "users_addresses" })
 export class UserAddress {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @PrimaryColumn({ name: "user_id", type: "int" })
   userId!: number;
 
-  @PrimaryColumn({ name: "address_type", type: "enum", enum: AddressType })
+  @PrimaryColumn({ name: "address_type", type: "varchar", length: 7 })
   addressType!: AddressType;
 
   @PrimaryColumn({ name: "valid_from", type: "timestamptz" })
@@ -49,5 +54,6 @@ export class UserAddress {
   updatedAt!: Date;
 
   @ManyToOne(() => User, (user) => user.addresses, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "user_id" })
   user!: Relation<User>;
 }
