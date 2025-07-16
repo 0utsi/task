@@ -123,6 +123,6 @@
 
 @layer components {
   .spinner {
-    @apply w-5 h-5 border-2 border-t-transparent border-current rounded-full animate-spin;
+    @apply w-5 h-5 border-2 border-t-transparent border-current rounded-full animate-spin mx-auto mt-[25%];
   }
 }
