@@ -8,7 +8,7 @@ import {
   TableHead,
   TableCell,
 } from "@/modules/shared/ui/table";
-import type { ReactNode } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface Column<T> {
   header: ReactNode;
@@ -21,6 +21,7 @@ type Props<T> = {
   data: T[];
   columns: Column<T>[];
   rowKey: (row: T) => string;
+  onEdit?: Dispatch<SetStateAction<T | null>>;
   isLoading?: boolean;
 };
 

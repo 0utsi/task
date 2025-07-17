@@ -1,5 +1,6 @@
 "use client";
 
+import { DialogDescription } from "@radix-ui/react-dialog";
 import { Button } from "./button";
 import {
   DialogHeader,
@@ -34,6 +35,7 @@ export function ConfirmDialog({
           <h2 className="text-lg font-semibold">{title}</h2>
           <p className="text-sm text-muted-foreground">{description}</p>
         </DialogHeader>
+        <DialogDescription />
         <DialogFooter className="gap-2 sm:justify-end">
           <Button variant="outline" onClick={onClose}>
             Cancel

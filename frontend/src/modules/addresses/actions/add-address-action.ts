@@ -5,7 +5,7 @@ import { AddressFormData } from "../address.schema";
 
 async function addUserAddressAction(
   userId: number,
-  data: Omit<AddressFormData, "validFrom"> & { validFrom: string }
+  data: AddressFormData & { validFrom: string }
 ) {
   await addressesRepo.addUserAddress({
     ...data,

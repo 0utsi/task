@@ -24,7 +24,9 @@ import {
 } from "@/modules/shared/ui/select";
 
 import { Typography } from "@/modules/shared/ui/typography";
-import { AddressType } from "../entities/user-address.entity";
+import { AddressType, UserAddress } from "../entities/user-address.entity";
+import { format } from "date-fns";
+import { useEffect } from "react";
 
 const addressFormSchema = z.object({
   addressType: z.nativeEnum(AddressType),
@@ -41,11 +43,18 @@ const addressFormSchema = z.object({
 type AddressFormData = z.infer<typeof addressFormSchema>;
 
 type Props = {
-  initialData?: AddressFormData;
+  initialData: UserAddress | null;
   onSubmit: (data: AddressFormData) => void;
+  open: boolean;
+  onHandleChange: () => void;
 };
 
-export default function AddressFormDialog({ initialData, onSubmit }: Props) {
+export default function AddressFormDialog({
+  initialData,
+  onSubmit,
+  open,
+  onHandleChange,
+}: Props) {
   const {
     control,
     register,
@@ -55,16 +64,40 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
     reset,
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
-    defaultValues: initialData ?? {
-      addressType: AddressType.HOME,
-      street: "",
-      buildingNumber: "",
-      postCode: "",
-      city: "",
-      countryCode: "",
-      validFrom: new Date().toISOString().slice(0, 10),
-    },
+    defaultValues: initialData
+      ? {
+          addressType: initialData.addressType,
+          street: initialData.street,
+          buildingNumber: initialData.buildingNumber,
+          postCode: initialData.postCode,
+          city: initialData.city,
+          countryCode: initialData.countryCode,
+          validFrom: format(initialData.validFrom, "yyyy-MM-dd"),
+        }
+      : {
+          addressType: AddressType.HOME,
+          street: "",
+          buildingNumber: "",
+          postCode: "",
+          city: "",
+          countryCode: "",
+          validFrom: new Date().toISOString().slice(0, 10),
+        },
   });
+
+  useEffect(() => {
+    if (initialData) {
+      reset({
+        addressType: initialData.addressType,
+        street: initialData.street,
+        buildingNumber: initialData.buildingNumber,
+        postCode: initialData.postCode,
+        city: initialData.city,
+        countryCode: initialData.countryCode,
+        validFrom: format(initialData.validFrom, "yyyy-MM-dd"),
+      });
+    }
+  }, [initialData, open, reset]);
 
   const { street, buildingNumber, postCode, city, countryCode } = watch();
 
@@ -74,14 +107,14 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
   };
 
   return (
-    <Dialog onOpenChange={() => reset()}>
+    <Dialog onOpenChange={onHandleChange} open={open}>
       <DialogTrigger asChild>
         <Button className="w-fit">Add User Address</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[400px] sm:p-4 p-2 gap-2 max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {initialData ? "Edit Address" : "Add Address"}
+            {initialData ? "Update Address" : "Add Address"}
           </DialogTitle>
           <DialogDescription />
         </DialogHeader>
@@ -194,7 +227,7 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
               </Button>
             </DialogClose>
             <Button type="submit" disabled={isSubmitting}>
-              {initialData ? "Save" : "Add"}
+              {initialData ? "Update" : "Add"}
             </Button>
           </DialogFooter>
         </form>

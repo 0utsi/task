@@ -17,10 +17,6 @@ let _initialized = false;
 export async function ensureDb() {
   if (!_initialized) {
     if (!db.isInitialized) await db.initialize();
-    console.log(
-      "ENTITIES:",
-      db.entityMetadatas.map((e) => e.name)
-    );
     _initialized = true;
   }
 }

@@ -12,12 +12,14 @@ import { MoreVertical } from "lucide-react";
 import { useCallback, useState, useTransition } from "react";
 import deleteUserAddress from "../actions/delete-address-action";
 import { useRouter } from "next/navigation";
+import { UserAddress } from "../entities/user-address.entity";
 
 type Props = {
-  addressId: number;
+  address: UserAddress;
+  onEdit: (address: UserAddress) => void;
 };
 
-export default function AddressActionsDropdown({ addressId }: Props) {
+export default function AddressActionsDropdown({ address, onEdit }: Props) {
   const [open, setOpen] = useState(false);
   const { refresh } = useRouter();
 
@@ -26,10 +28,9 @@ export default function AddressActionsDropdown({ addressId }: Props) {
   const handleOpenChange = useCallback(() => {
     setOpen((prev) => !prev);
   }, []);
-  console.log(addressId);
+
   const handleDelete = async () => {
-    console.log(addressId);
-    await deleteUserAddress(addressId);
+    await deleteUserAddress(address.id);
     startTransition(() => {
       refresh();
     });
@@ -44,7 +45,7 @@ export default function AddressActionsDropdown({ addressId }: Props) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={() => alert(`Edit user ${addressId}`)}>
+          <DropdownMenuItem onSelect={() => onEdit(address)}>
             Edit
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={handleOpenChange}>

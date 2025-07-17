@@ -1,6 +1,5 @@
 import { db, ensureDb } from "@/lib/data-source";
 import { UserAddress } from "./entities/user-address.entity";
-import { AddressFormData } from "./address.schema";
 
 export const addressesRepo = {
   listByUser: async (userId: number, skip = 0, take = 20) => {
@@ -16,7 +15,7 @@ export const addressesRepo = {
     await ensureDb();
     db.getRepository(UserAddress).save(data);
   },
-  updateUserAddress: (id: number, data: Partial<AddressFormData>) =>
+  updateUserAddress: (id: number, data: Partial<UserAddress>) =>
     db.getRepository(UserAddress).update(id, data),
   deleteUserAddress: (id: number) => db.getRepository(UserAddress).delete(id),
 };
