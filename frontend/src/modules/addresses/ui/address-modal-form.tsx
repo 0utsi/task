@@ -22,9 +22,10 @@ import {
   SelectContent,
   SelectItem,
 } from "@/modules/shared/ui/select";
-import { AddressType } from "@/db/entities/user-address.entity";
 
-// Schemat Zod
+import { Typography } from "@/modules/shared/ui/typography";
+import { AddressType } from "../entities/user-address.entity";
+
 const addressFormSchema = z.object({
   addressType: z.nativeEnum(AddressType),
   street: z.string().min(1).max(100),
@@ -50,6 +51,7 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    watch,
     reset,
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
@@ -64,6 +66,8 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
     },
   });
 
+  const { street, buildingNumber, postCode, city, countryCode } = watch();
+
   const submit = (data: AddressFormData) => {
     onSubmit(data);
     reset();
@@ -74,42 +78,15 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
       <DialogTrigger asChild>
         <Button className="w-fit">Add User Address</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-[400px] sm:p-4 p-2 gap-2">
         <DialogHeader>
           <DialogTitle>
             {initialData ? "Edit Address" : "Add Address"}
           </DialogTitle>
-          <DialogDescription>Fill in address details.</DialogDescription>
+          <DialogDescription />
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(submit)} className="grid gap-4 py-4">
-          <Controller
-            name="addressType"
-            control={control}
-            render={({ field }) => (
-              <>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Address Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.values(AddressType).map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.addressType && (
-                  <p className="text-red-600 text-sm">
-                    {errors.addressType.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-
-          {/* Standard Inputs */}
+        <form onSubmit={handleSubmit(submit)} className="grid gap-2 py-2">
           <div>
             <Input label="Street" {...register("street")} />
             {errors.street && (
@@ -130,6 +107,7 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
               <p className="text-red-600 text-sm">{errors.postCode.message}</p>
             )}
           </div>
+
           <div>
             <Input label="City" {...register("city")} />
             {errors.city && (
@@ -148,13 +126,67 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
               </p>
             )}
           </div>
-          <div>
-            <Input label="Valid From" type="date" {...register("validFrom")} />
-            {errors.validFrom && (
-              <p className="text-red-600 text-sm">{errors.validFrom.message}</p>
-            )}
+          <div className="flex sm:flex-row flex-col justify-between">
+            <div className="flex flex-col">
+              <div>
+                <Input
+                  label="Valid From"
+                  className="w-fit"
+                  type="date"
+                  {...register("validFrom")}
+                />
+                {errors.validFrom && (
+                  <p className="text-red-600 text-sm">
+                    {errors.validFrom.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className="mb-1 text-xs font-light">Address type</label>
+                <Controller
+                  name="addressType"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Address Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.values(AddressType).map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {errors.addressType && (
+                        <p className="text-red-600 text-sm">
+                          {errors.addressType.message}
+                        </p>
+                      )}
+                    </>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="size-full flex flex-col items-center justify-center">
+              <div>
+                <div className="flex flex-row gap-2">
+                  <Typography variant="small">{street}</Typography>
+                  <Typography variant="small"> {buildingNumber}</Typography>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <Typography variant="small">{postCode}</Typography>
+                  <Typography variant="small"> {city}</Typography>
+                </div>
+                <Typography variant="small">{countryCode}</Typography>
+              </div>
+            </div>
           </div>
-
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline" type="button">

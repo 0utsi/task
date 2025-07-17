@@ -1,3 +1,4 @@
+import { User } from "@/modules/user/entities/user.entity";
 import {
   Entity,
   Column,
@@ -8,7 +9,7 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./user.entity";
+
 import type { Relation } from "typeorm";
 
 export enum AddressType {

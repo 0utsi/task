@@ -1,4 +1,4 @@
-import { User, UserStatus } from "@/db/entities/user.entity";
+import { User, UserStatus } from "@/modules/user/entities/user.entity";
 import { Column } from "@/modules/shared/ui/data-table";
 import { InfoIcon } from "lucide-react";
 import Link from "next/link";
@@ -9,7 +9,7 @@ const columns: Column<User>[] = [
   {
     header: "",
     accessor: (u) => (
-      <Link href={`/users/userId=${u.id}/addresses`}>
+      <Link href={`/users/${u.id}/addresses`}>
         <InfoIcon className="cursor-pointer hover:scale-105 transition" />
       </Link>
     ),

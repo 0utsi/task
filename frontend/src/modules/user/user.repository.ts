@@ -1,5 +1,5 @@
-import { db, ensureDb } from "@/db/data-source";
-import { User } from "@/db/entities/user.entity";
+import { db, ensureDb } from "@/lib/data-source";
+import { User } from "@/modules/user/entities/user.entity";
 
 export const usersRepo = {
   usersList: async (page = 1, pageSize = 10) => {

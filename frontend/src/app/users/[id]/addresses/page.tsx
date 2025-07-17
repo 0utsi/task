@@ -1,16 +1,11 @@
-// src/app/users/[id]/addresses/page.tsx
 import { addressesRepo } from "@/modules/addresses/address.respository";
 import AddressList from "@/modules/addresses/ui/address-list";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ userId?: string }>;
-}) {
-  const { userId } = await searchParams;
-  const id = parseInt(userId ?? "1", 10);
+type tParams = Promise<{ id: number }>;
 
-  const [addresses] = await addressesRepo.getUserAddress(id);
+export default async function Page(props: { params: tParams }) {
+  const { id } = await props.params;
+  const addresses = await addressesRepo.listByUser(id);
   const plainAddresses = JSON.parse(JSON.stringify(addresses));
 
   return (

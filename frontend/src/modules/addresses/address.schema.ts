@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { AddressType } from "@/db/entities/user-address.entity";
+import { AddressType } from "./entities/user-address.entity";
 
 export const addressFormSchema = z.object({
-  addressType: z.nativeEnum(AddressType),
+  addressType: z.enum(AddressType),
   street: z.string().min(1).max(100),
   buildingNumber: z.string().min(1).max(60),
   postCode: z.string().min(1).max(6),

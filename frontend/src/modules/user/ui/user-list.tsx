@@ -1,7 +1,6 @@
 "use client";
 
-import { User } from "@/db/entities/user.entity";
-
+import { User } from "@/modules/user/entities/user.entity";
 import { Button } from "@/modules/shared/ui/button";
 import { DataTable } from "@/modules/shared/ui/data-table";
 import columns from "./column-render";
