@@ -10,18 +10,17 @@ CREATE TABLE users (
 );
 
 CREATE TABLE users_addresses (
-    id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id) ON DELETE CASCADE,
-    address_type VARCHAR(7) NOT NULL CHECK (address_type IN ('HOME', 'INVOICE', 'POST', 'WORK')),
-    valid_from TIMESTAMP NOT NULL,
-    post_code VARCHAR(6) NOT NULL,
-    city VARCHAR(60) NOT NULL,
-    country_code VARCHAR(3) NOT NULL,
-    street VARCHAR(100) NOT NULL,
+    id             SERIAL PRIMARY KEY,
+    user_id        INT        REFERENCES users(id) ON DELETE CASCADE,
+    address_type   VARCHAR(7) NOT NULL CHECK (address_type IN ('HOME','INVOICE','POST','WORK')),
+    valid_from     TIMESTAMP  NOT NULL,
+    post_code      VARCHAR(6) NOT NULL,
+    city           VARCHAR(60) NOT NULL,
+    country_code   VARCHAR(3) NOT NULL,
+    street         VARCHAR(100) NOT NULL,
     building_number VARCHAR(60) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY (user_id, address_type, valid_from)
+    created_at     TIMESTAMP  DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at     TIMESTAMP  DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE OR REPLACE FUNCTION update_updated_at_column()
