@@ -1,13 +1,12 @@
 "use client";
 
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useState } from "react";
 import { AddressFormData } from "../address.schema";
 import addUserAddress from "../actions/add-address-action";
 import AddressFormDialog from "./address-modal-form";
 import { useRouter } from "next/navigation";
 import { UserAddress } from "../entities/user-address.entity";
 import Link from "next/link";
-
 import { ChevronLeft } from "lucide-react";
 import updateUserAddress from "../actions/update-address-action";
 import getColumns from "./column-render";
@@ -29,9 +28,6 @@ export default function AddressList({ data, userId }: Props) {
     setOpen((o) => !o);
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isPending, startTransition] = useTransition();
-
   const handleOpenChange = useCallback(() => {
     setOpen((prev) => !prev);
   }, []);
@@ -44,7 +40,7 @@ export default function AddressList({ data, userId }: Props) {
       await addUserAddress(userId, formData);
       handleOpenChange();
     }
-    startTransition(() => refresh());
+    refresh();
     setAddress(null);
   };
 

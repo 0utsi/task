@@ -6,7 +6,7 @@ export const addressesRepo = {
     await ensureDb();
     return db.getRepository(UserAddress).find({
       where: { userId },
-      order: { validFrom: "DESC" },
+      order: { updatedAt: "DESC" },
       skip,
       take,
     });
@@ -15,7 +15,12 @@ export const addressesRepo = {
     await ensureDb();
     db.getRepository(UserAddress).save(data);
   },
-  updateUserAddress: (id: number, data: Partial<UserAddress>) =>
-    db.getRepository(UserAddress).update(id, data),
-  deleteUserAddress: (id: number) => db.getRepository(UserAddress).delete(id),
+  updateUserAddress: async (id: number, data: Partial<UserAddress>) => {
+    await ensureDb();
+    db.getRepository(UserAddress).update(id, data);
+  },
+  deleteUserAddress: async (id: number) => {
+    await ensureDb();
+    db.getRepository(UserAddress).delete(id);
+  },
 };
