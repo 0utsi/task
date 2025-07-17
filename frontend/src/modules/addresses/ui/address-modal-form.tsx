@@ -78,7 +78,7 @@ export default function AddressFormDialog({ initialData, onSubmit }: Props) {
       <DialogTrigger asChild>
         <Button className="w-fit">Add User Address</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[400px] sm:p-4 p-2 gap-2">
+      <DialogContent className="max-w-[400px] sm:p-4 p-2 gap-2 max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {initialData ? "Edit Address" : "Add Address"}

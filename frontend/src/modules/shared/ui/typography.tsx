@@ -4,6 +4,7 @@ type TypographyProps = {
   children: React.ReactNode;
   variant?: "h1" | "h2" | "h3" | "h4" | "p" | "muted" | "lead" | "small";
   className?: string;
+  icon?: React.ReactNode;
 };
 
 const variants = {
@@ -14,13 +15,14 @@ const variants = {
   p: "text-base leading-7",
   lead: "text-xl text-muted-foreground",
   muted: "text-sm text-muted-foreground",
-  small: "text-xs font-light opacity-0.6",
+  small: "text-xs font-light opacity-60",
 };
 
 export function Typography({
   children,
   variant = "p",
   className,
+  icon,
 }: TypographyProps) {
   const Tag =
     variant === "p" ||
@@ -30,5 +32,10 @@ export function Typography({
       ? "p"
       : variant;
 
-  return <Tag className={cn(variants[variant], className)}>{children}</Tag>;
+  return (
+    <Tag className={cn("flex items-center ga-1", variants[variant], className)}>
+      {icon && <span className="shrink-0">{icon}</span>}
+      {children}
+    </Tag>
+  );
 }

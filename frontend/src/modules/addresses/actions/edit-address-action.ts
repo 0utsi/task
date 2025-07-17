@@ -3,10 +3,10 @@
 import { addressesRepo } from "../address.respository";
 import { AddressFormData } from "../address.schema";
 
-async function addUserAddressAction(
-  userId: number,
+async function editUserAddress(
+  addressId: number,
   data: Partial<AddressFormData>
 ) {
-  await addressesRepo.updateUserAddress(userId, data);
+  await addressesRepo.updateUserAddress(addressId, data);
 }
-export default addUserAddressAction;
+export default editUserAddress;

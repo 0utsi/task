@@ -3,7 +3,6 @@ import {
   Entity,
   Column,
   ManyToOne,
-  PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
@@ -24,13 +23,13 @@ export class UserAddress {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @PrimaryColumn({ name: "user_id", type: "int" })
+  @Column({ name: "user_id", type: "int" })
   userId!: number;
 
-  @PrimaryColumn({ name: "address_type", type: "varchar", length: 7 })
+  @Column({ name: "address_type", type: "varchar", length: 7 })
   addressType!: AddressType;
 
-  @PrimaryColumn({ name: "valid_from", type: "timestamptz" })
+  @Column({ name: "valid_from", type: "timestamptz" })
   validFrom!: Date;
 
   @Column({ name: "post_code", length: 6 })

@@ -13,7 +13,7 @@ export default async function Page({
 
   const { users, totalCount } = await usersRepo.usersList(page, pageSize);
   const plainUsers = JSON.parse(JSON.stringify(users));
-
+  console.log(plainUsers);
   return (
     <main className="p-6">
       <UsersList data={plainUsers} />

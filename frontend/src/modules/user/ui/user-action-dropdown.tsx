@@ -22,10 +22,18 @@ export default function UserActionsDropdown({ userId }: Props) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onSelect={() => alert(`Edit user ${userId}`)}>
+        <DropdownMenuItem
+          onSelect={() => {
+            console.log(userId);
+          }}
+        >
           Edit
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => alert(`Delete user ${userId}`)}>
+        <DropdownMenuItem
+          onSelect={() => {
+            console.log(userId);
+          }}
+        >
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>

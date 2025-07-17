@@ -9,6 +9,9 @@ import addUserAddress from "../actions/add-address-action";
 import AddressFormDialog from "./address-modal-form";
 import { useRouter } from "next/navigation";
 import { UserAddress } from "../entities/user-address.entity";
+import Link from "next/link";
+import { Typography } from "@/modules/shared/ui/typography";
+import { ChevronLeft } from "lucide-react";
 
 type Props = {
   data: UserAddress[];
@@ -41,6 +44,13 @@ export default function AddressList({ data, userId }: Props) {
           rowKey={(a) => a.id.toString()}
         />
       </div>
+      <Typography
+        icon={<ChevronLeft size={14} />}
+        variant="small"
+        className="hover:underline"
+      >
+        <Link href={"/users"}>Back to users list</Link>
+      </Typography>
     </div>
   );
 }
