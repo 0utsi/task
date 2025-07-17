@@ -1,7 +1,7 @@
-import { Column } from "@/modules/shared/ui/data-table";
 import { format } from "date-fns";
 import { UserAddress } from "../entities/user-address.entity";
 import AddressActionsDropdown from "./address-action-dropdown";
+import { Column } from "@/components/ui/data-table";
 
 export default function getColumns(
   onEdit: (address: UserAddress) => void

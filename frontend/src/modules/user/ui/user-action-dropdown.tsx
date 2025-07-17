@@ -1,12 +1,13 @@
 "use client";
 
-import { Button } from "@/modules/shared/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/modules/shared/ui/dropdown-menu";
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 import { MoreVertical } from "lucide-react";
 
 type Props = {

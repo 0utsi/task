@@ -1,15 +1,18 @@
 "use client";
 
 import { User } from "@/modules/user/entities/user.entity";
-import { Button } from "@/modules/shared/ui/button";
-import { DataTable } from "@/modules/shared/ui/data-table";
+
 import columns from "./column-render";
+import { DataTable } from "@/components/ui/data-table";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 type Props = {
   data: User[];
 };
 
 export default function UsersList({ data }: Props) {
+  const { push } = useRouter();
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -20,6 +23,7 @@ export default function UsersList({ data }: Props) {
         data={data}
         columns={columns}
         rowKey={(u) => u.id.toString()}
+        onRowClick={(user) => push(`/users/${user.id}/addresses`)}
       />
     </div>
   );

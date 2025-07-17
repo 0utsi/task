@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import {
   Select,
@@ -9,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/modules/shared/ui/select";
+} from "@/components/ui/select";
 
 type Props = {
   page: number;

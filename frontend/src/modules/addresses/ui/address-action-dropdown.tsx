@@ -1,18 +1,18 @@
 "use client";
 
-import { Button } from "@/modules/shared/ui/button";
-import { ConfirmDialog } from "@/modules/shared/ui/confirm-dialog";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/modules/shared/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { useCallback, useState, useTransition } from "react";
 import deleteUserAddress from "../actions/delete-address-action";
 import { useRouter } from "next/navigation";
 import { UserAddress } from "../entities/user-address.entity";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
 type Props = {
   address: UserAddress;

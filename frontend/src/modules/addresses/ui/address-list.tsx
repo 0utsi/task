@@ -1,6 +1,5 @@
 "use client";
 
-import { DataTable } from "@/modules/shared/ui/data-table";
 import { useCallback, useState, useTransition } from "react";
 import { AddressFormData } from "../address.schema";
 import addUserAddress from "../actions/add-address-action";
@@ -8,10 +7,12 @@ import AddressFormDialog from "./address-modal-form";
 import { useRouter } from "next/navigation";
 import { UserAddress } from "../entities/user-address.entity";
 import Link from "next/link";
-import { Typography } from "@/modules/shared/ui/typography";
+
 import { ChevronLeft } from "lucide-react";
 import updateUserAddress from "../actions/update-address-action";
 import getColumns from "./column-render";
+import { Typography } from "@/components/ui/typography";
+import { DataTable } from "@/components/ui/data-table";
 
 type Props = {
   data: UserAddress[];

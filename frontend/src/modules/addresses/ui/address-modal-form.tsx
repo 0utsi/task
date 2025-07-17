@@ -3,30 +3,29 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
-  DialogClose,
-} from "@/modules/shared/ui/dialog";
-import { Button } from "@/modules/shared/ui/button";
-import { Input } from "@/modules/shared/ui/input";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/modules/shared/ui/select";
-
-import { Typography } from "@/modules/shared/ui/typography";
 import { AddressType, UserAddress } from "../entities/user-address.entity";
 import { format } from "date-fns";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  DialogHeader,
+  DialogFooter,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Typography } from "@/components/ui/typography";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const addressFormSchema = z.object({
   addressType: z.nativeEnum(AddressType),

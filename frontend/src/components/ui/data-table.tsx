@@ -1,14 +1,15 @@
 "use client";
 
+import type { Dispatch, ReactNode, SetStateAction } from "react";
+
 import {
-  Table,
   TableHeader,
-  TableBody,
   TableRow,
   TableHead,
+  TableBody,
   TableCell,
-} from "@/modules/shared/ui/table";
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+  Table,
+} from "./table";
 
 export interface Column<T> {
   header: ReactNode;
@@ -23,6 +24,7 @@ type Props<T> = {
   rowKey: (row: T) => string;
   onEdit?: Dispatch<SetStateAction<T | null>>;
   isLoading?: boolean;
+  onRowClick?: (a: T) => void;
 };
 
 export function DataTable<T>({
@@ -30,6 +32,7 @@ export function DataTable<T>({
   columns,
   rowKey,
   isLoading = false,
+  onRowClick,
 }: Props<T>) {
   return (
     <div className="overflow-x-auto">
@@ -49,7 +52,13 @@ export function DataTable<T>({
         ) : (
           <TableBody>
             {data.map((row) => (
-              <TableRow key={rowKey(row)}>
+              <TableRow
+                key={rowKey(row)}
+                onClick={onRowClick ? () => onRowClick(row) : undefined}
+                className={`${
+                  onRowClick ? "hover:bg-gray-100 cursor-pointer" : ""
+                }`}
+              >
                 {columns.map((col, i) => {
                   const value =
                     typeof col.accessor === "function"

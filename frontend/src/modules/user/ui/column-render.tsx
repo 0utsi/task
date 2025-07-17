@@ -1,20 +1,9 @@
 import { User, UserStatus } from "@/modules/user/entities/user.entity";
-import { Column } from "@/modules/shared/ui/data-table";
-import { InfoIcon } from "lucide-react";
-import Link from "next/link";
 import { format } from "date-fns";
 import UserActionsDropdown from "./user-action-dropdown";
+import { Column } from "@/components/ui/data-table";
 
 const columns: Column<User>[] = [
-  {
-    header: "",
-    accessor: (u) => (
-      <Link href={`/users/${u.id}/addresses`}>
-        <InfoIcon className="cursor-pointer hover:scale-105 transition" />
-      </Link>
-    ),
-    width: "w-10",
-  },
   {
     header: "Name",
     accessor: (u) => [u.firstName, u.lastName].filter(Boolean).join(" "),
